@@ -1,0 +1,69 @@
+<!--
+	구조 선택자
+	 ===============
+	  :first-child
+	  :last-child
+	 =============== 메뉴
+	  :nth_child(수열)
+	   2n+1 => n은 0번부터
+	           1 3 5 7 9...
+	   3n+1 => 1 4 7...
+	 =============== 많이 사용하는 내용
+-->
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style type="text/css">
+	table thead tr:first-child{
+		background-color: orange;
+	}
+	/*
+	  0 2 4 6...
+	*/
+	table tbody tr:nth-child(2n){
+		background-color: olive;		
+	}
+</style>
+</head>
+<body>
+	<h1>nth-child</h1>
+	<table width="500" border="1" bordercolor="black">
+		<thead>
+			<tr>
+				<th>이름</th>
+				<th>국어</th>
+				<th>영어</th>
+				<th>수학</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>임현서</td>
+				<td>100</td>
+				<td>100</td>
+				<td>100</td>
+			</tr>
+			<tr>
+				<td>황미애</td>
+				<td>90</td>
+				<td>100</td>
+				<td>85</td>
+			</tr>
+			<tr>
+				<td>김철</td>
+				<td>100</td>
+				<td>100</td>
+				<td>100</td>
+			</tr>
+			<tr>
+				<td>한송이</td>
+				<td>100</td>
+				<td>100</td>
+				<td>100</td>
+			</tr>
+		</tbody>
+	</table>
+</body>
+</html>

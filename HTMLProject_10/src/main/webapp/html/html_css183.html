@@ -1,0 +1,68 @@
+<!--
+	텍스트 관련 CSS
+	  => font-size , font-family , font-weight
+	  => color
+	  1. text-decoration: none , underline , overline
+           => 메뉴 , <a>
+	  2. text-transform : none, uppercase , lowercase
+	  3. text-shadow
+   ***4. white-space
+   ***5. letter-spacing
+      6. word-spacing
+  ****7. text-align : 정렬 => left/center/right
+-->
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style type="text/css">
+	ul{
+		width:700px;
+		background-color: rgb(235, 207, 241);
+		color:black;
+	}
+	li{
+		width:auto;
+		list-style: none;
+		display:inline-block;
+		/*text-transform: uppercase;*/
+		/* 사용처 : 로고문자열 */
+	}
+	a{
+		color: black;
+		text-decoration: none;
+		text-shadow: 5px 5px 3px red;
+	}
+	a:hover{
+		color: white;
+		text-decoration: overline;
+	}
+	table{
+		width:600px
+	}
+	pre{
+		white-space: pre-wrap;    /* 자동 줄바꿈 */
+		/* letter-spacing:1.2em; */
+	}
+</style>
+</head>
+<body>
+  <ul>
+	  <li><a href="#">Home</a></li>
+	  <li><a href="#">Member</a></li>
+	  <li><a href="#">FreeBoard</a></li>
+	  <li><a href="#">Recommand</a></li>
+	  <li><a href="#">MyPage</a></li>
+  </ul>
+  <table>
+	  <tr>
+		  <td><pre>지난해 11월 30일 오픈AI의 인공지능(AI) GPT-3.5를 기반으로 한 '챗GPT'의 등장은 초거대 언어모델(LLM)을 앞세워 생성형 AI에 대한 대중의 눈과 귀를 사로잡은 사건이었다. 챗GPT 공개를 기점으로 일반 이용자들도 생성형 AI를 엔진으로 삼아 가동하는 챗봇, 문서 요약, 이미지 제작 애플리케이션 등을 쉽게 접할 수 있게 됐다. 그야말로 '대AI 시대'가 열린 것이다.
+
+SK텔레콤의 AI 애플리케이션 '에이닷'은 최근 애플의 아이폰 이용자들도 통화 녹음을 할 수 있는 서비스를 연계하면서 화제 몰이에 성공했다. 통화 녹음 자체는 AI와 관계없지만 이용자들은 통화 내용을 텍스트로 바꿔 채팅 형태로 제공할 뿐 아니라 통화 내용을 요약하고 문단 형태로 나눠 정리하는 AI 서비스에 대해서도 만족감을 보였다.
+
+챗GPT 등장 이전부터 조금씩 인지도가 상승 중이던 스테이블 디퓨전 모델 기반의 이미지 생성형 AI는 '불쾌한 골짜기'라는 표현이 상징하듯 거부감이 여전히 존재한다. AI로 만든 그래픽 특유의 느낌이 완전히 사라지지 않았기 때문이다. 하지만 간단한 이미지 편집 앱은 유행을 타고 이용자 수가 크게 늘어나고 있다. 네이버 자회사 스노우의 앱 '에픽'이 1990년대 미국 졸업사진 분위기로 사진을 재가공해 주는 'AI 이어북'이 사회관계망서비스(SNS)에서 화제를 부른 것이 한 예다.</pre></td>
+	  </tr>
+  </table>
+</body>
+</html>

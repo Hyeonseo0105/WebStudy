@@ -1,0 +1,70 @@
+@charset "UTF-8";
+/*container{
+		margin-top:50px;
+	}
+	.row{
+		margin:0px auto;     auto : 가운데 정렬 
+		width:850px;
+	}*/
+	#image{
+		width:100%;
+		height: 500px;
+	}
+	#title,#price{
+		font-size: 25px;
+		font-weight: bold;
+	}
+	#sub{
+		color: dimgray;
+	}
+	#percent{
+		font-size: 25px;
+		color: rgb(255, 128, 64);
+		font-weight: bold;
+	}
+	#label{
+		font-size: 10px;
+		color: seagreen;
+		font-weight: bold;
+	}
+	#price2{
+		font-size: 25px;
+		color: green;
+		font-weight: bold;
+	}
+	#star{
+		color: orange;
+		font-weight: bold;
+	}
+	#bold{
+		font-weight: bold;
+	}
+	#count{
+		color: lightgray;
+	}
+	img[src*='delivery3']{
+		width: 20px;
+		height: 20px;
+	}
+	#delevery{
+		color: gray;
+	}
+	#sel{
+		width: 90%;
+		height: 40px;
+	}
+	#cart,#buy{
+		width: 220px;
+		height: 50px;
+		border: 2px yellowgreen solid;
+		font-size: 20px;
+		font-weight: bold;
+	}
+	#cart{
+		background-color: white;
+		color: yellowgreen;
+	}
+	#buy{
+		background-color: yellowgreen;
+		color: white;
+	}
