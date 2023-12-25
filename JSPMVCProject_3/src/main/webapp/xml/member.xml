@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE member SYSTEM "member.dtd">
+<!--
+	dtd를 꼭 올려놓고 사용 dtd:태그순서 알려줌
+	Spring / MyBatis
+-->
+<member>
+  <list>
+  	<id>lim</id>  
+  	<pwd>1234</pwd>  	
+  	<name>임현서</name>
+  	<address>서울</address>
+  	<phone>010-1111-1111</phone>
+  </list>
+</member>
