@@ -1,6 +1,7 @@
 package com.sist.dao;
 
-import java.util.*;import java.util.Locale.Category;
+import java.util.*;
+import java.util.Locale.Category;
 import java.sql.*;
 import com.sist.dbcp.*;
 import com.sist.vo.FoodCategoryVO;
