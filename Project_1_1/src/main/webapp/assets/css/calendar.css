@@ -13,8 +13,7 @@
 }*/
 
 .calendar {
-  margin: 0px auto;
-  background-color:#EAEDED ;
+  background-color:#F5F5F5 ;
   width: 400px;
   height: 350px;
   display: flex;
@@ -25,7 +24,7 @@
   
 }
 .calendar > span {
-  background-color: #5385c1;
+  background-color: lightskyblue;
   color: white;
   font-weight: 700;
   font-size: 30px;
@@ -58,60 +57,34 @@
 
 * .calendar_id{
 	margin-top: 20px;
-	margin-left: 250px;
+	margin-left: 160px;
 	font-weight: bold;
 	color: black;
 }
-
-#c_id:hover, #c_id2:hover{
-	color: #5385c1;
-}
-
 * .calendar_id2{
 	margin-top: 0px;
-	margin-left: 250px;
+	margin-left: 160px;
 	font-weight: bold;
 	color: black;
 }
 .calendar_table{
-	margin-left: 100px;
 	width: 400px;
 	height: 350px;
 	border: 1px solid lightgray;
     border-collapse: collapse;
-    font-size: 18px;
-    font-weight: 500;
 }
-
-.calendar_table a:hover{
-	color: #5385c1;
+.homeinfo_banner{
+	width: 470px;
+    height: 350px;
+	overflow: hidden;
+    position: relative;
 }
-
-#d1{
-	margin-left: 2px;
+.homeinfo_slide{
+	float: left;
+    position: relative;
 }
-#d2{
-	margin-left: 1.5px;
-}
-#d3{
-	margin-left: 1px;
-}
-#d4{
-	margin-left: 1px;
-	margin-top:16px
-}
-#direct01{
-	margin:11px 1px -10px 10px;
-}
-
-#direct02{
-	margin:18px 1px -10px 10px;
-}
-
-#direct03{
-	margin:15px 3px -10px 14px;
-}
-
-#direct04{
-	margin:18px 0px -10px 10px;
+/* 홈 이용 */
+* .lib_hh{
+	width: auto;
+	height: 87.5px;
 }

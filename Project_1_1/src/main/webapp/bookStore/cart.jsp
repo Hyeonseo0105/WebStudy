@@ -7,6 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-<!-- 마이페이지 메뉴바 -->
+
 </body>
 </html>

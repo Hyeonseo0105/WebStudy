@@ -7,6 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-<!-- 도서대출정보 메뉴 -->
+
 </body>
 </html>

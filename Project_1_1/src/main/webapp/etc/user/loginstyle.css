@@ -10,7 +10,7 @@ form#login-form {
   background: #fff;
   width: 47em;
   height: 35em;
-  margin:0.5% 0% 3% 34%;
+  margin:0.3% 0% 3% 33%;
   overflow: hidden;
   position: relative;
   -moz-border-radius: 0.2em;
@@ -100,8 +100,8 @@ div.left input[type="text"]:focus, div.left input[type="password"]:focus {
   border: 0.1em solid #919191;
 }
 input[type="button"] {
-  margin-left:19.4em;
-  margin-top:18px;
+  margin-left:20.5em;
+  margin-top:13px;
   background: rgba(179, 179, 179,0.6);
   color:black;
   outline: none;

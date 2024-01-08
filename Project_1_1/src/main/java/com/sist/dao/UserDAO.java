@@ -364,4 +364,48 @@ public class UserDAO {
 		}
 		return result;
 	}
+	
+	// 탈퇴하기
+	public String delete(String userID,String pwd)
+	{
+		String result="";
+		try
+		{
+			conn=dbconn.getConnection();
+			String sql="SELECT pwd FROM userjoin "
+					  +"WHERE userid=?";
+			System.out.println(userID);
+			ps=conn.prepareStatement(sql);
+			ps.setString(1,userID);
+			ResultSet rs=ps.executeQuery();
+			rs.next();
+			String del_pwd=rs.getString(1);
+			rs.close();
+			
+			if(del_pwd.equals(pwd))
+			{
+				result="yes";
+				sql="DELETE FROM userjoin "
+				   +"WHERE userid=?";
+				ps=conn.prepareStatement(sql);
+				ps.setString(1, userID);
+				ps.executeUpdate();
+				ps.close();
+			}
+			else
+			{
+				result="no";
+			}
+			
+		}
+		catch(Exception ex)
+		{
+			ex.printStackTrace();
+		}
+		finally
+		{
+			dbconn.disConnection(conn, ps);
+		}
+		return result;
+	}
 }

@@ -288,4 +288,21 @@ public class UserModel {
 		request.setAttribute("main_jsp", "../user/user_main.jsp");
 		return "../main/main.jsp";
 	}
+	
+	// 탈퇴하기
+	@RequestMapping("user/delete_ok.do")
+	public void user_delete(HttpServletRequest request,HttpServletResponse response)
+	{
+		String userID=request.getParameter("userID");
+		String pwd=request.getParameter("pwd");
+		UserDAO dao=UserDAO.newInstance();
+		String result=dao.delete(userID, pwd);
+		try
+		{
+		   PrintWriter out=response.getWriter();
+		   out.write(result);
+		}
+		catch(Exception ex) {}
+		
+	}
 }

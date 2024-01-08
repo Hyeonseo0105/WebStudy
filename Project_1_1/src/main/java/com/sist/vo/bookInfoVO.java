@@ -6,6 +6,21 @@ public class bookInfoVO {
 	private int bino,fixedprice,saleprice;
 	private String bookinfo,contents,authorinfo,image;
 	private Date acquisition;
+	private int count;
+	private BookReserve brvo = new BookReserve();
+	
+	public BookReserve getBrvo() {
+		return brvo;
+	}
+	public void setBrvo(BookReserve brvo) {
+		this.brvo = brvo;
+	}
+	public int getCount() {
+		return count;
+	}
+	public void setCount(int count) {
+		this.count = count;
+	}
 	public String getIsbn() {
 		return isbn;
 	}

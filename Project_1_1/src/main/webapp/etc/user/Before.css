@@ -9,9 +9,7 @@ body {
 form#login-form {
   background: #fff;
   width: 30%;
-  margin:0% auto;
-  margin-top: 5%;
-  margin-bottom:5%;
+  margin:0.3% 0% 3% 34%;
   overflow: hidden;
   position: relative;
   -moz-border-radius: 0.3em;
