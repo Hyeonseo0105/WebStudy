@@ -228,7 +228,7 @@ public class UserDAO {
 			}
 			else
 			{
-				sql="SELECT userid,name,pwd,admin "
+				sql="SELECT userid,name,pwd,admin,hno,hintA "
 				   +"FROM userjoin "
 				   +"WHERE userid=?";
 				ps=conn.prepareStatement(sql);
@@ -239,6 +239,8 @@ public class UserDAO {
 				String name=rs.getString(2);
 				String db_pwd=rs.getString(3);
 				String admin=rs.getString(4);
+				int hno=rs.getInt(5);
+				String hintA=rs.getString(6);
 				rs.close();
 				
 				if(db_pwd.equals(pwd))
@@ -246,6 +248,8 @@ public class UserDAO {
 					vo.setUserID(db_id);
 					vo.setName(name);
 					vo.setAdmin(admin);
+					vo.setHno(hno);
+					vo.setHintA(hintA);
 					vo.setMsg("OK");
 				}
 				else
@@ -365,6 +369,106 @@ public class UserDAO {
 		return result;
 	}
 	
+	// 회원정보 수정 데이터
+	public UserVO userupdateinfo(String userID)
+	{
+		UserVO vo=new UserVO();
+		try
+		{
+			conn=dbconn.getConnection();
+			String sql="SELECT userid,name,gender,post,addr1,addr2,phone,birth,email,hno,hintA "
+					  +"FROM userjoin "
+					  +"WHERE userid=?";
+			ps=conn.prepareStatement(sql);
+			ps.setString(1, userID);
+			ResultSet rs=ps.executeQuery();
+			while(rs.next())
+			{
+				vo.setUserID(rs.getString(1));
+				vo.setName(rs.getString(2));
+				vo.setGender(rs.getString(3));
+				vo.setPost(rs.getString(4));
+				vo.setAddr1(rs.getString(5));
+				vo.setAddr2(rs.getString(6));
+				vo.setPhone(rs.getString(7));
+				vo.setBirth(rs.getString(8));
+				vo.setEmail(rs.getString(9));
+				vo.setHno(rs.getInt(10));
+				vo.setHintA(rs.getString(11));				
+			}
+			rs.close();
+		}
+		catch(Exception ex)
+		{
+			ex.printStackTrace();
+		}
+		finally
+		{
+			dbconn.disConnection(conn, ps);
+		}
+		return vo;
+	}
+	
+	// 회원정보 수정
+	public String userupdate(String userID,int hno,String hintA)
+	{
+		String result="";
+		try
+		{
+			conn=dbconn.getConnection();
+			String sql="SELECT COUNT(*) FROM userjoin "
+					  +"WHERE userid=? AND hno=? AND hintA=?";
+			ps=conn.prepareStatement(sql);
+			ps.setString(1, userID);
+			ps.setInt(2, hno);
+			ps.setString(3, hintA);
+			ResultSet rs=ps.executeQuery();
+			rs.next();
+			int count=rs.getInt(1);
+			System.out.println(count);
+			rs.close();
+			
+			if(count==0) 
+			{
+				// 틀림
+				result="update_no";
+			}
+			else if(count==1)
+			{
+				result="update_ok";
+				UserVO vo=new UserVO();
+				sql="UPDATE userjoin SET "
+				   +"pwd=?,email=?,post=?,addr1=?,addr2=?,phone=? "
+				   +"WHERE userid=? AND hno=? AND hintA=?";
+				ps=conn.prepareStatement(sql);
+				ps.setString(1, vo.getPwd());
+				ps.setString(2, vo.getEmail());
+				ps.setString(3, vo.getPost());
+				ps.setString(4, vo.getAddr1());
+				ps.setString(5, vo.getAddr2());
+				ps.setString(6, vo.getPhone());
+				
+				ps.setString(7, userID);
+				ps.setInt(8, hno);
+				ps.setString(9, hintA);
+				
+				rs=ps.executeQuery();
+				rs.next();
+				result=rs.getString(1);
+				rs.close();
+			}
+		}
+		catch(Exception ex)
+		{
+			ex.printStackTrace();
+		}
+		finally
+		{
+			dbconn.disConnection(conn, ps);
+		}
+		return result;
+	}
+	
 	// 탈퇴하기
 	public String delete(String userID,String pwd)
 	{
@@ -374,7 +478,6 @@ public class UserDAO {
 			conn=dbconn.getConnection();
 			String sql="SELECT pwd FROM userjoin "
 					  +"WHERE userid=?";
-			System.out.println(userID);
 			ps=conn.prepareStatement(sql);
 			ps.setString(1,userID);
 			ResultSet rs=ps.executeQuery();

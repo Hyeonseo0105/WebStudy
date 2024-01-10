@@ -1,11 +1,41 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Noto+Serif+KR&display=swap" rel="stylesheet">
+<style type="text/css">
+	header#header{
+		position: sticky;
+		top: 0;
+		background-color: black;
+		height: 50px;
+		line-height: 0;
+	}
+	header#header .logo img{
+		width: 70px;
+		height: 35px;
+		margin-top: 7px;
+	}
+	header#header form.search-form{
+		margin: 0;
+		height: 35px;
+		transform: translate(-50%, 20%);
+	}
+	header#header form.search-form input[type="search"]{
+		width: 240px; 
+	}
+	div#menubar{
+		position: sticky;
+		top: 50px;
+		z-index: 999;
+	}
+</style>
 <script type="text/javascript" src="http://code.jquery.com/jquery.js"></script>
 <script type="text/javascript">
 function plsLogin() {
@@ -75,17 +105,12 @@ $(function(){
 						
 					<c:if test="${sessionScope.email!=null }">
 					  <a href="../user/logout.do">로그아웃</a>
-					  <input type="button" id="deleteBtn" value="탈퇴하기"></a>
-  					  <div class="del" style="display:none">
-   						<input type="password" value="비밀번호" id="delete_pwd">
-    					<input type="button" value="탈퇴" id="delBtn" data-id="${sessionScope.email }" class="btn btn-xs btn-danger">
-  					  </div>
-					</c:if>
 					<c:if test="${sessionScope.admin eq 'n' || sessionScope.admin eq null }">
 						<a ${sessionScope.email==null?"onclick=plsLogin()":"href=../mypage/mypage_main.do" } style="cursor: pointer;">마이페이지</a>					
 					</c:if>
 					<c:if test="${sessionScope.admin eq 'y' }">
 						<a href="#">관리자페이지</a>
+					</c:if>
 					</c:if>
 					</nav>
 					<a href="#navPanel" class="navPanelToggle"><span class="fa fa-bars"></span></a>

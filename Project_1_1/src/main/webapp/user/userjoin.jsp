@@ -10,7 +10,8 @@
 <script type="text/javascript" src="../shadow/js/shadowbox.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
 <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Raleway'>
-<link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css'><link rel="stylesheet" href="../etc/user/userjoinstyle.css">
+<link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css'>
+<link rel="stylesheet" href="../etc/user/userjoinstyle.css">
 <script type="text/javascript" src="http://code.jquery.com/jquery.js"></script>
 <script type="text/javascript">
 Shadowbox.init({
@@ -190,20 +191,21 @@ function check()
           <label for="gender_female" id="female" style="cursor:pointer;color:black">여자</label>
        </div>
       </div>
-    <h2 style="margin-left:14%;margin-top:6%">비밀번호 찾기 QnA</h2>
+    <h2 style="margin-left:14%;margin-top:6%">계정 확인 QnA</h2>
      <select name="hno" id="hno" style="cursor:pointer;width:70%;margin-left:14%">
        <option selected>질문선택</option>
        <c:forEach var="vo" items="${hList}" varStatus="s">
          <option value="${s.index+1 }">${vo }</option>
        </c:forEach>
      </select>
-    <input type="text" placeholder="질문에 대한 답" id="a" name="hintA">
+    <input type="text" placeholder="질문에 대한 답" id="hintA" name="hintA">
       <input type="submit" value="가입" onClick="return check()" id="joinBtn" name="joinBtn" style="cursor:pointer;float:left;margin-left:14%">
       <input type="button" onClick="javascript:history.back()" value="취소" style="cursor:pointer;margin-left:30%">
     <br><br><br>
     <h2 style="margin-left:5%">이용 약관</h2>
       <input id="terms" type="checkbox">
       <label for="terms" style="cursor:pointer;margin-left:5%">실명 인증된 아이디로 가입, 위치기반서비스 이용약관, 이벤트・혜택 정보 수신 동의를 포함합니다.</label>
+      <br><br>
   </div>
 </form>
 <!-- partial -->

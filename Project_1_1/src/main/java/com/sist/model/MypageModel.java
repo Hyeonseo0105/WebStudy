@@ -1,5 +1,6 @@
 package com.sist.model;
 
+import java.io.PrintWriter;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -8,6 +9,7 @@ import javax.servlet.http.HttpSession;
 
 import com.sist.controller.RequestMapping;
 import com.sist.dao.MyPageDAO;
+import com.sist.dao.UserDAO;
 import com.sist.vo.AllLikeVO;
 import com.sist.vo.BookDeliverVO;
 import com.sist.vo.UserVO;
@@ -158,6 +160,80 @@ public class MypageModel {
 			request.setAttribute("mypage_bookPurchaseList_jsp", "../mypage/bookPurchaseDetail.jsp");
 			request.setAttribute("mypage_jsp", "../mypage/bookPurchaseList.jsp");
 			request.setAttribute("main_jsp", "../mypage/myPage_main.jsp");
+			return "../main/main.jsp";
+		}
+		
+		// 회원정보 수정 페이지
+		@RequestMapping("user/userupdate.do")
+		public String user_Update(HttpServletRequest request, HttpServletResponse response)
+		{
+			HttpSession session=request.getSession();
+			String userID=(String)session.getAttribute("email");
+			
+			UserDAO dao=UserDAO.newInstance();
+			
+			UserVO uvo=dao.userupdateinfo(userID);
+			List<String> hList=dao.hintQuestion();
+			
+			request.setAttribute("hList", hList);
+			
+			request.setAttribute("uvo", uvo);
+			
+			request.setAttribute("user_jsp", "../user/userupdate.jsp");
+			request.setAttribute("main_jsp", "../user/userupdate_main.jsp");
+			return "../main/main.jsp";
+		}
+		
+		// 회원정보 수정
+		@RequestMapping("user/update_ok.do")
+		public String user_update_ok(HttpServletRequest request,HttpServletResponse response)
+		{
+			// pwd=?,email=?,post=?,addr1=?,addr2=?,phone=?
+			try
+			{
+				request.setCharacterEncoding("UTF-8");
+			}
+			catch(Exception ex) {}
+			
+			String userID=request.getParameter("update_id");
+			int hno=Integer.valueOf(request.getParameter("update_hno"));
+			String hintA=request.getParameter("update_hintA");
+			UserDAO dao=UserDAO.newInstance();
+			String result=dao.userupdate(userID, hno, hintA);
+			
+			String pwd=request.getParameter("update_pwd1");
+			String email=request.getParameter("update_email");
+			String post=request.getParameter("update_post");
+			String addr1=request.getParameter("update_addr1");
+			String addr2=request.getParameter("update_addr2");
+			String phone=request.getParameter("update_phone");
+			
+			UserVO vo=new UserVO();
+			vo.setPwd(pwd);
+			vo.setEmail(email);
+			vo.setPost(post);
+			vo.setAddr1(addr1);
+			vo.setAddr2(addr2);
+			vo.setPhone(phone);
+			
+			dao.userupdate(userID, hno, hintA);
+			
+			try
+			{
+				PrintWriter out=response.getWriter();
+				out.println(result);
+			}
+			catch(Exception ex) {}
+			
+			return "redirect:../main/main.do";
+		}
+		
+		// 회원탈퇴
+		@RequestMapping("user/userdelete.do")
+		public String user_delete(HttpServletRequest request,HttpServletResponse response)
+		{
+			request.setAttribute("user_jsp", "../user/userdelete.jsp");
+			request.setAttribute("main_jsp", "../user/userupdate_main.jsp");
 			return "../main/main.jsp";
 		}
 }

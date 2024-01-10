@@ -46,6 +46,8 @@ public class UserModel {
 			session.setAttribute("email", vo.getUserID());
 			session.setAttribute("name", vo.getName());
 			session.setAttribute("admin", vo.getAdmin());
+			session.setAttribute("hno", vo.getHno());
+			session.setAttribute("hintA", vo.getHintA());
 		}
 		
 		// ajax로 전송
@@ -66,7 +68,7 @@ public class UserModel {
 		return "redirect:../main/main.do";
 	}
 
-	// 회원가입
+	// 회원가입 페이지
 	@RequestMapping("user/userjoin.do")
 	public String user_join(HttpServletRequest request, HttpServletResponse response)
 	{
@@ -171,6 +173,7 @@ public class UserModel {
 		}catch(Exception ex) {}
 	}
 		
+	// 회원가입 
 	@RequestMapping("user/join_ok.do")
 	public String user_join_ok(HttpServletRequest request,HttpServletResponse response)
 	{
@@ -272,23 +275,6 @@ public class UserModel {
 		catch(Exception ex) {}
 	}
 	
-	// 회원수정
-	@RequestMapping("user/mUpBefore.do")
-	public String user_mUB(HttpServletRequest request, HttpServletResponse response)
-	{
-		request.setAttribute("user_jsp", "../user/mUpBefore.jsp");
-		request.setAttribute("main_jsp", "../user/user_main.jsp");
-		return "../main/main.jsp";
-	}
-	
-	@RequestMapping("user/mUpdate.do")
-	public String user_mUpdate(HttpServletRequest request, HttpServletResponse response)
-	{
-		request.setAttribute("user_jsp", "../user/mUpdate.jsp");
-		request.setAttribute("main_jsp", "../user/user_main.jsp");
-		return "../main/main.jsp";
-	}
-	
 	// 탈퇴하기
 	@RequestMapping("user/delete_ok.do")
 	public void user_delete(HttpServletRequest request,HttpServletResponse response)
@@ -297,6 +283,10 @@ public class UserModel {
 		String pwd=request.getParameter("pwd");
 		UserDAO dao=UserDAO.newInstance();
 		String result=dao.delete(userID, pwd);
+		
+		HttpSession session=request.getSession();
+		session.invalidate();
+		
 		try
 		{
 		   PrintWriter out=response.getWriter();
@@ -305,4 +295,5 @@ public class UserModel {
 		catch(Exception ex) {}
 		
 	}
+	
 }

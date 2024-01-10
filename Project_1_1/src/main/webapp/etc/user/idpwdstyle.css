@@ -10,7 +10,7 @@ form#login-form {
   background: #fff;
   width: 47em;
   height: 35em;
-  margin:0.3% 0% 3% 33%;
+  margin:0% 0% 3% 10%;
   overflow: hidden;
   position: relative;
   -moz-border-radius: 0.2em;
@@ -21,8 +21,8 @@ form#login-form {
   box-shadow: 0 0 0.1em rgb(128, 128, 128);
 }
 form#login-form div.heading {
-  background: rgba(179, 179, 179,0.6);
-  color: rgb(0, 0, 0);
+  background: #1245AB;
+  color: white;
   text-align: center;
   text-transform: uppercase;
   font-weight: bold;
@@ -149,7 +149,7 @@ select:focus{
 #fi {
   margin-left:3em;
   margin-top:31.5%;
-  background: rgba(179, 179, 179,0.6);
+  background-color: #1245AB;
   color: rgb(0, 0, 0);
   outline: none;
   text-transform: uppercase;
@@ -168,7 +168,7 @@ select:focus{
 #fp {
   margin-left:2em;
   margin-top:18px;
-  background: rgba(179, 179, 179,0.6);
+  background-color: #1245AB;
   color: rgb(0, 0, 0);
   outline: none;
   text-transform: uppercase;
@@ -185,8 +185,8 @@ select:focus{
   transition: all 0.15s ease-in-out;
 }
 #fi:hover {
-  background: rgba(179, 179, 179);
+  background: linear-gradient(110deg, #53a2e0 10%,#3f6fd1 80%);
 }
 #fp:hover {
-  background: rgba(179, 179, 179);
+  background: linear-gradient(110deg, #53a2e0 10%,#3f6fd1 80%);
 }

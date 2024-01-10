@@ -16,7 +16,6 @@
 		border: 0;
 		font-size: 100%;
 		font: inherit;
-		vertical-align: baseline;
 	}
 .image.fit img {
 	width: 100%;
@@ -1588,8 +1587,8 @@
 /* Type */
 
 	body, input, select, textarea {
-		color: #9a9a9a;
-		font-family: "Raleway", Arial, Helvetica, sans-serif;
+		font-family: 'Black Han Sans', sans-serif;
+		font-family: 'Noto Serif KR', serif;
 		font-size: 13pt;
 		font-weight: 300;
 		line-height: 1.65;
@@ -1658,7 +1657,7 @@
 	}
 
 	h1, h2, h3, h4, h5, h6 {
-		color: #5385c1;
+		color: lightskyblue;
 		font-weight: 300;
 		line-height: 1.5;
 		margin: 0 0 1em 0;
@@ -1905,6 +1904,10 @@
 
 		.flex.flex-2 article {
 			width: 47%;
+		}
+		.flex.flex-5 article {
+			margin: 0px auto;
+			width: 30%;
 		}
 
 		.flex.flex-3 article {
@@ -3086,10 +3089,6 @@
 		}
 
 	}
-#deleteBtn,#delBtn
-{
-	background-color: rgba(0, 0, 0, 0);
-	color: white;
-	font-size: 15px;
-	font-weight: 100;
-}
+	ul.pagination li{
+		padding-left: 0 !important;
+	}
