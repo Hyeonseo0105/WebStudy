@@ -42,51 +42,6 @@ function plsLogin() {
 	alert('로그인이 필요한 서비스입니다')
 	location.href='../user/login.do'
 }
-$(function(){	
-	let bCheck=false;
-	$('#deleteBtn').click(function(){
-		if(bCheck===false)
-		{
-			bCheck=true;
-			$('.del').show('slow')
-			$('#deleteBtn').text("취소")
-		}
-		else
-		{
-			bCheck=false;
-			$('.del').hide('slow')
-			$('#deleteBtn').text("탈퇴하기")
-		}
-	});
-	
-	$('#delBtn').on('click',function(){
-		let userID=$('#delBtn').attr("data-id");
-		let pwd=$('#delete_pwd').val()
-		if(pwd.trim()==="")
-		{
-			$('#delete_pwd').focus();
-			return;
-		}
-		$.ajax({
-			type:'post',
-			url:'../user/delete_ok.do',
-			data:{"userID":userID,"pwd":pwd},
-			success:function(result)
-			{
-				if(result==="yes")
-				{
-					location.href="../main/main.do"
-				}
-				else
-				{
-					alert("비밀번호가 틀립니다!!")
-					$('#delete_pwd').val("")
-					$('#delete_pwd').focus();
-				}
-			}
-		})
-	})
-});
 </script>
 </head>
 <body>

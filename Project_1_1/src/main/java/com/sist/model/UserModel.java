@@ -46,7 +46,7 @@ public class UserModel {
 			session.setAttribute("email", vo.getUserID());
 			session.setAttribute("name", vo.getName());
 			session.setAttribute("admin", vo.getAdmin());
-			session.setAttribute("hno", vo.getHno());
+			session.setAttribute("hintQ", vo.getHintQ());
 			session.setAttribute("hintA", vo.getHintA());
 		}
 		
@@ -265,8 +265,6 @@ public class UserModel {
 		String hintA=request.getParameter("find_hintA");
 		UserDAO dao=UserDAO.newInstance();
 		String res=dao.findPwd(userID, hno, hintA);
-		System.out.println(hno);
-		System.out.println(hintA);
 		try
 		{
 			PrintWriter out=response.getWriter();
@@ -275,9 +273,73 @@ public class UserModel {
 		catch(Exception ex) {}
 	}
 	
+	// 회원정보 수정 페이지
+	@RequestMapping("user/userupdate.do")
+	public String user_Update(HttpServletRequest request, HttpServletResponse response)
+	{
+		UserDAO dao=UserDAO.newInstance();
+		List<String> hList=dao.hintQuestion();
+		request.setAttribute("hList", hList);
+		
+		HttpSession session=request.getSession();
+		String userID=(String)session.getAttribute("email");
+				
+		dao=UserDAO.newInstance();
+		UserVO uvo=dao.userupdateinfo(userID);
+		request.setAttribute("uvo", uvo);
+				
+		request.setAttribute("user_jsp", "../user/userupdate.jsp");
+		request.setAttribute("main_jsp", "../user/userupdate_main.jsp");		
+		return "../main/main.jsp";
+	}
+		
+	// 회원정보 수정
+	@RequestMapping("user/update_ok.do")
+	public String user_update_ok(HttpServletRequest request,HttpServletResponse response)
+	{
+		try
+		{
+			request.setCharacterEncoding("UTF-8");
+		}
+		catch(Exception ex) {}
+		
+		HttpSession session=request.getSession();
+		String id=(String) session.getAttribute("email");
+		String pwd=request.getParameter("update_pwd1");
+		String email=request.getParameter("update_email");
+		String post=request.getParameter("update_post");
+		String addr1=request.getParameter("update_addr1");
+		String addr2=request.getParameter("update_addr2");
+		String phone=request.getParameter("update_phone");
+			
+		UserVO vo=new UserVO();
+		vo.setUserID(id);
+		vo.setPwd(pwd);
+		vo.setEmail(email);
+		vo.setPost(post);
+		vo.setAddr1(addr1);
+		vo.setAddr2(addr2);
+		vo.setPhone(phone);
+		
+		UserDAO dao=UserDAO.newInstance();
+		dao.userupdate(vo);
+		
+		return "redirect: ../mypage/mypage_main.do";
+	}
+
+
+	// 회원탈퇴 페이지
+	@RequestMapping("user/userdelete.do")
+	public String user_delete(HttpServletRequest request,HttpServletResponse response)
+	{
+		request.setAttribute("user_jsp", "../user/userdelete.jsp");
+		request.setAttribute("main_jsp", "../user/userupdate_main.jsp");
+		return "../main/main.jsp";
+	}
+			
 	// 탈퇴하기
 	@RequestMapping("user/delete_ok.do")
-	public void user_delete(HttpServletRequest request,HttpServletResponse response)
+	public void user_delete_ok(HttpServletRequest request,HttpServletResponse response)
 	{
 		String userID=request.getParameter("userID");
 		String pwd=request.getParameter("pwd");

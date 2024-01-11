@@ -41,10 +41,10 @@ $(function(){
 function fn_phone()
 {
 	let phone=$('#phone').val();
-	if(phone.length!=11)
-	{
-		$('#res').html('<span style="color:#F15F5F">전화번호는 11자리로 입력해주세요</span>')
-	}
+	//if(phone.length!=11)
+	//{
+	//	
+	//}
 		$.ajax({
 		type:'post',
 		url:'../user/phonecheck_ok.do',
@@ -61,6 +61,10 @@ function fn_phone()
 				$('#res').html('<span style="color:#F15F5F">'+phone+'는(은) 이미 사용중인 전화번호입니다.</span>')
 				$('#phone').val("");
 				$('#phone').focus();
+			}
+			else if(count==3)
+			{
+				$('#res').html('<span style="color:#F15F5F">전화번호는 11자리로 입력해주세요</span>')
 			}
 		  }
 		})
@@ -136,7 +140,7 @@ function check()
 		frm.hno.focus();
 		return false;
 	}
-	if(frm.a.value.length==0)
+	if(frm.hintA.value.length==0)
 	{
 		alert("질문의 답을 입력하세요.");
 		frm.a.focus();
@@ -150,8 +154,8 @@ function check()
 	}
 
 	if(frm.id1!=0 && frm.join_pwd!=0 && frm.join_name!=0 
-			      && frm.join_birth!=0 && frm.phone!=0 
-			      && frm.join_email!=0 && frm.post!=0&& frm.addr1!=0)
+			      && frm.join_birth!=0 && frm.phone!=0
+			      && frm.post!=0 && frm.addr1!=0 && frm.hintA!=0)
 	{
 		alert("회원가입을 축하합니다!!");
 	}
@@ -167,7 +171,7 @@ function check()
     <input type="password" placeholder="비밀번호" name="pwd" id="join_pwd">
     <input type="password" placeholder="비밀번호 확인" id="join_pwd2">
     <input type="text" placeholder="이름" name="name" id="join_name">
-    <input type="email" placeholder="이메일" name="email1" id="join_email">
+    <input type="email" placeholder="이메일" name="email" id="join_email">
     <input type="text" placeholder="우편번호" name="post1" id="post1" style="float:left;width:45.7%;" readonly>
     <input type=button value="우편번호검색" id="postBtn" style="cursor:pointer;width:23%;">
     <input type="text" placeholder="주소" id="addr1" name="addr1" readonly>
@@ -199,6 +203,7 @@ function check()
        </c:forEach>
      </select>
     <input type="text" placeholder="질문에 대한 답" id="hintA" name="hintA">
+    <h6 style="color:red;margin-left:55%">※계정 확인 QnA는 수정할 수 없습니다.</h6>
       <input type="submit" value="가입" onClick="return check()" id="joinBtn" name="joinBtn" style="cursor:pointer;float:left;margin-left:14%">
       <input type="button" onClick="javascript:history.back()" value="취소" style="cursor:pointer;margin-left:30%">
     <br><br><br>

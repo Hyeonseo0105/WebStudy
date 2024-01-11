@@ -31,8 +31,12 @@ $(function(){
 			{
 				if(result==="yes")
 				{
-					alert("탈퇴 되었습니다.");
-					setTimeout("location.href='../main/main.do'",1000);
+					var returnValue=confirm("탈퇴 하시겠습니까?");
+					if(returnValue===true)
+					{
+						alert("탈퇴 되었습니다.")
+						setTimeout("location.href='../main/main.do'",500);
+					}
 				}
 				else
 				{
@@ -80,7 +84,7 @@ $(function(){
 </head>
 <body>
 <!-- partial:index.partial.html -->
-<form action="#" id="delete_form">
+<form id="delete_form">
   <div class="heading">회원 탈퇴</div>
     <label for="delete_pwd">비밀번호</label>
     <input type="password" name="delete_pwd" id="delete_pwd">

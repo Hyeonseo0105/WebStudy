@@ -46,11 +46,13 @@ $(function(){
 			}
 		})
 	});
+	
 	$('#okBtn').click(function(){
 		parent.frm.id1.value=$('#id').val()
 		parent.Shadowbox.close()
 	})
 })
+
 </script>
 </head>
 <body>

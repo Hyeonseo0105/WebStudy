@@ -1,3 +1,5 @@
+<%@page import="com.sist.vo.UserVO"%>
+<%@page import="com.sist.dao.UserDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -17,7 +19,22 @@
 Shadowbox.init({
 	players:['iframe']
 })
-$(function(){	
+function updatecheck()
+{
+	let hintA=$('#update_hintA').val();
+	if(hintA===$('#uphintA').val())
+	{
+		$('#updateBtn').show('slow')
+		$('#updateCheckBtn').hide()
+		$('h6').hide()
+	}
+	else
+	{
+		$('h6').html('질문에 대한 답변을 다시 입력해주세요.')
+	}
+}
+
+$(function(){
 	$('#postBtn').click(function(){
 		Shadowbox.open({
 			content:'../user/post.do',
@@ -27,43 +44,8 @@ $(function(){
 			height:350
 		})
 	})
-	$('#updateBtn').click(function(){
-		let userID=$('#updateBtn').attr("data-update");
-		let update_hno=$('#update_hno').attr("data-update-hno");
-		if(update_hno.trim()==="0")
-		{
-			$('#update_hno').select();   //focus 이동하면서 입력한게 블록으로 선택됨
-			return;
-		}
-		  
-		let update_hintA=$('#update_hintA').attr("data-update-hintA")
-		if(update_hintA.trim()==="0")
-		{
-			$('#update_hintA').focus();
-			return;
-		}
-		$.ajax({
-			type:'post',
-			url:'../user/update_ok.do',
-			data:{"update_hno":hno,"update_hintA":hintA},
-			success:function(result)
-			{
-				let res=result.trim()
-				if(res==='NO')
-				{
-					alert("질문이나 질문에 대한 답을 다시 입력해주세요.")
-					$('#update_hintA').val("")
-					$('#update_hno').select();
-				}
-				else
-				{
-					alert("회원 정보를 수정했습니다.")
-					setTimeout("location.href='../main/main.do'",1000);
-				}
-			}
-		})
-	})
 })
+
 function update_check()
 {
 	if(ufrm.update_pwd1.value.length==0)
@@ -80,12 +62,12 @@ function update_check()
 		return false;
 	}
 	
-	//if(ufrm.update_pwd1.value.length != ufrm.update_pwd2.value.lengh)
-	//{
-	//	alert("비밀번호가 일치하지 않습니다.");
-	//	ufrm.update_pwd1.select();
-	//	return false;
-	//}
+	if(ufrm.update_pwd1.value != ufrm.update_pwd2.value)
+	{
+		alert("비밀번호가 일치하지 않습니다.");
+		ufrm.update_pwd1.select();
+		return false;
+	}
 	
 	if(ufrm.update_phone.value.length==0)
 	{
@@ -100,24 +82,27 @@ function update_check()
 		ufrm.update_hintA.focus();
 		return false;
 	}
+	if(ufrm.update_pwd1!=0 && ufrm.update_pwd2!=0 && ufrm.update_phone!=0 && ufrm.update_hintA!=0)
+	{
+		alert("회원정보를 수정하였습니다.");
+		setTimeout("location.href='../main/main.do'",1000);
+	};
 }
-// 질문 , 답 맞아야 수정가능
-
 </script>
 </head>
 <body>
-<form id="update_form" name="ufrm">
+<form method=post action="../user/update_ok.do" id="update_form" name="ufrm">
   <div class="heading">회원정보 수정</div>
   <div class="left">
     <input type="text" value="${uvo.userID }" name="update_id" id="update_id" style="margin-top:7%" readonly>
-    <input type="password" placeholder="새 비밀번호" name="update_pwd1">
-    <input type="password" placeholder="새 비밀번호 확인" name="update_pwd2">
+    <input type="password" placeholder="새 비밀번호" name="update_pwd1" id="update_pwd1">
+    <input type="password" placeholder="새 비밀번호 확인" name="update_pwd2" id="update_pwd2">
     <input type="text" value="${uvo.name }" name="update_name" readonly>
     <c:if test="${uvo.email!=null }">
-      <input type="email" value="${uvo.email }" name="update_email">
+      <input type="email" value="${uvo.email }" name="update_email" id="update_email">
     </c:if>
     <c:if test="${uvo.email==null }">
-      <input type="email" placeholder="이메일" name="update_email">
+      <input type="email" placeholder="이메일" name="update_email" id="update_email">
     </c:if>
     <input type="text" value="${uvo.post }" name="update_post" id="update_post" style="float:left;width:45.7%;" readonly>
     <input type=button value="우편번호검색" id="postBtn" style="cursor:pointer;width:23%;">
@@ -162,15 +147,20 @@ function update_check()
        </div>
       </div>
     <h2 style="margin-left:14%;margin-top:6%">계정 확인 QnA</h2>
-     <select style="cursor:pointer;width:70%;margin-left:14%" name="update_hno" id="update_hno" data-update-hno="${sessionScope.hno }">
-       <option selected>질문선택</option>
-       <c:forEach var="uvo" items="${hList}" varStatus="s">
-         <option value="${s.index+1 }">${uvo }</option>
+<%--     <select style="cursor:pointer;width:70%;margin-left:14%" name="update_hno" id="update_hno">
+       <option>질문선택</option>
+       <c:forEach var="vo" items="${hList}" varStatus="s">
+         <option value="${s.index+1 }">${vo}</option>
        </c:forEach>
      </select>
-    <input type="text" placeholder="질문에 대한 답" id="update_hintA" name="update_hintA" data-update-hintA="${sessionScope.hintA }">
-      <input type="button" value="수정" onclick="return update_check()" id="updateBtn" name="updateBtn" 
-         data-update="${sessionScope.email }" style="cursor:pointer;float:left;margin-left:14%">
+--%><input type="text" value="${sessionScope.hintQ}" id="uphintQ">    
+    <input type="text" placeholder="질문에 대한 답" id="update_hintA" name="update_hintA">
+    
+    <input style="display:none" type="text" value="${sessionScope.hintA }" id="uphintA">
+    <h6 style="color:red;margin-left:14%"></h6>
+      <input type="button" value="질문확인" onclick="updatecheck()" id="updateCheckBtn" name="updateCheckBtn" data-upid="${sessionScope.email }"
+             style="cursor:pointer;float:left;margin-left:14%">
+     <input type="submit" value="수정" id="updateBtn" name="updateBtn" style="display:none;margin-left:14%">
       <input type="button" onclick="javascript:history.back()" value="취소" style="cursor:pointer;margin-left:30%">
     <br><br><br>
     <h2 style="margin-left:5%">이용 약관</h2>

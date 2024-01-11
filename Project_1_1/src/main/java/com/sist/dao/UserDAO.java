@@ -149,6 +149,9 @@ public class UserDAO {
 		if(phone.equals("")) {
 			return 2;
 		}
+		if(phone.length()!=11) {
+			return 3;
+		}
 		try
 		{
 			conn=dbconn.getConnection();
@@ -228,8 +231,10 @@ public class UserDAO {
 			}
 			else
 			{
-				sql="SELECT userid,name,pwd,admin,hno,hintA "
+				sql="SELECT userid,name,pwd,admin,hintQ,hintA "
 				   +"FROM userjoin "
+				   +"JOIN hint "		
+				   +"ON userjoin.hno=hint.hno "
 				   +"WHERE userid=?";
 				ps=conn.prepareStatement(sql);
 				ps.setString(1, id);
@@ -239,7 +244,7 @@ public class UserDAO {
 				String name=rs.getString(2);
 				String db_pwd=rs.getString(3);
 				String admin=rs.getString(4);
-				int hno=rs.getInt(5);
+				String hintQ=rs.getString(5);
 				String hintA=rs.getString(6);
 				rs.close();
 				
@@ -248,7 +253,7 @@ public class UserDAO {
 					vo.setUserID(db_id);
 					vo.setName(name);
 					vo.setAdmin(admin);
-					vo.setHno(hno);
+					vo.setHintQ(hintQ);
 					vo.setHintA(hintA);
 					vo.setMsg("OK");
 				}
@@ -256,6 +261,7 @@ public class UserDAO {
 				{
 					vo.setMsg("NOPWD");
 				}
+				
 			}
 		} 
 		catch (Exception ex) 
@@ -369,14 +375,14 @@ public class UserDAO {
 		return result;
 	}
 	
-	// 회원정보 수정 데이터
+	// 회원정보 수정 페이지
 	public UserVO userupdateinfo(String userID)
 	{
 		UserVO vo=new UserVO();
 		try
 		{
 			conn=dbconn.getConnection();
-			String sql="SELECT userid,name,gender,post,addr1,addr2,phone,birth,email,hno,hintA "
+			String sql="SELECT userid,name,gender,post,addr1,addr2,phone,birth,email "
 					  +"FROM userjoin "
 					  +"WHERE userid=?";
 			ps=conn.prepareStatement(sql);
@@ -393,8 +399,6 @@ public class UserDAO {
 				vo.setPhone(rs.getString(7));
 				vo.setBirth(rs.getString(8));
 				vo.setEmail(rs.getString(9));
-				vo.setHno(rs.getInt(10));
-				vo.setHintA(rs.getString(11));				
 			}
 			rs.close();
 		}
@@ -410,53 +414,24 @@ public class UserDAO {
 	}
 	
 	// 회원정보 수정
-	public String userupdate(String userID,int hno,String hintA)
+	public void userupdate(UserVO vo)
 	{
-		String result="";
 		try
 		{
 			conn=dbconn.getConnection();
-			String sql="SELECT COUNT(*) FROM userjoin "
-					  +"WHERE userid=? AND hno=? AND hintA=?";
+			String sql="UPDATE userjoin SET "
+				      +"pwd=?,email=?,post=?,addr1=?,addr2=?,phone=? "
+				      +"WHERE userid=?";
 			ps=conn.prepareStatement(sql);
-			ps.setString(1, userID);
-			ps.setInt(2, hno);
-			ps.setString(3, hintA);
-			ResultSet rs=ps.executeQuery();
-			rs.next();
-			int count=rs.getInt(1);
-			System.out.println(count);
-			rs.close();
+			ps.setString(1, vo.getPwd());
+			ps.setString(2, vo.getEmail());
+			ps.setString(3, vo.getPost());
+			ps.setString(4, vo.getAddr1());
+			ps.setString(5, vo.getAddr2());
+			ps.setString(6, vo.getPhone());
 			
-			if(count==0) 
-			{
-				// 틀림
-				result="update_no";
-			}
-			else if(count==1)
-			{
-				result="update_ok";
-				UserVO vo=new UserVO();
-				sql="UPDATE userjoin SET "
-				   +"pwd=?,email=?,post=?,addr1=?,addr2=?,phone=? "
-				   +"WHERE userid=? AND hno=? AND hintA=?";
-				ps=conn.prepareStatement(sql);
-				ps.setString(1, vo.getPwd());
-				ps.setString(2, vo.getEmail());
-				ps.setString(3, vo.getPost());
-				ps.setString(4, vo.getAddr1());
-				ps.setString(5, vo.getAddr2());
-				ps.setString(6, vo.getPhone());
-				
-				ps.setString(7, userID);
-				ps.setInt(8, hno);
-				ps.setString(9, hintA);
-				
-				rs=ps.executeQuery();
-				rs.next();
-				result=rs.getString(1);
-				rs.close();
-			}
+			ps.setString(7, vo.getUserID());
+			ps.executeUpdate();
 		}
 		catch(Exception ex)
 		{
@@ -466,9 +441,8 @@ public class UserDAO {
 		{
 			dbconn.disConnection(conn, ps);
 		}
-		return result;
 	}
-	
+
 	// 탈퇴하기
 	public String delete(String userID,String pwd)
 	{
@@ -488,12 +462,70 @@ public class UserDAO {
 			if(del_pwd.equals(pwd))
 			{
 				result="yes";
+				
+				sql="DELETE FROM bookboard "
+				   +"WHERE userid=?";
+				ps=conn.prepareStatement(sql);
+				ps.setString(1, userID);
+				ps.executeUpdate();
+				ps.close();
+						
+				sql="DELETE FROM bookdelivery "
+				   +"WHERE userid=?";
+				ps=conn.prepareStatement(sql);
+				ps.setString(1, userID);
+				ps.executeUpdate();
+				ps.close();
+				
+				sql="DELETE FROM bookcart "
+				   +"WHERE userid=?";
+				ps=conn.prepareStatement(sql);
+				ps.setString(1, userID);
+				ps.executeUpdate();
+				ps.close();
+						
+				sql="DELETE FROM program_application "
+				   +"WHERE userid=?";
+				ps=conn.prepareStatement(sql);
+				ps.setString(1, userID);
+				ps.executeUpdate();
+				ps.close();
+								
+				sql="DELETE FROM all_like "
+				   +"WHERE userid=?";
+				ps=conn.prepareStatement(sql);
+				ps.setString(1, userID);
+				ps.executeUpdate();
+				ps.close();
+										
+				sql="DELETE FROM all_reply "
+				   +"WHERE userid=?";
+				ps=conn.prepareStatement(sql);
+				ps.setString(1, userID);
+				ps.executeUpdate();
+				ps.close();
+												
+				sql="DELETE FROM seatreserve "
+				   +"WHERE userid=?";
+				ps=conn.prepareStatement(sql);
+				ps.setString(1, userID);
+				ps.executeUpdate();
+				ps.close();
+
+				sql="DELETE FROM seoul_qna "
+				   +"WHERE userid=?";
+				ps=conn.prepareStatement(sql);
+				ps.setString(1, userID);
+				ps.executeUpdate();
+				ps.close();
+				
 				sql="DELETE FROM userjoin "
 				   +"WHERE userid=?";
 				ps=conn.prepareStatement(sql);
 				ps.setString(1, userID);
 				ps.executeUpdate();
 				ps.close();
+								
 			}
 			else
 			{
